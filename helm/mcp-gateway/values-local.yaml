@@ -1,0 +1,24 @@
+image:
+  repository: mcp-gateway
+  tag: dev
+
+global:
+  imagePullPolicy: IfNotPresent
+
+store:
+  host: store.local
+  persistence:
+    size: 5Gi
+
+database:
+  persistence:
+    size: 5Gi
+
+gateway:
+  host: gateway.local
+
+dashboard:
+  host: dashboard.local
+
+dataPersistence:
+  size: 1Gi

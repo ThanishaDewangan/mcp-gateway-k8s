@@ -1,0 +1,105 @@
+global:
+  imagePullPolicy: IfNotPresent
+
+image:
+  repository: mcp-gateway
+  tag: dev
+
+secrets:
+  existingSecret: mcp-gateway-secrets
+
+store:
+  host: store.local
+  siteScheme: http
+  image: mcp-woocommerce:dev
+  persistence:
+    enabled: true
+    size: 8Gi
+    storageClass: ""
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 1000m
+      memory: 1Gi
+
+database:
+  image: mariadb:11.4
+  persistence:
+    size: 8Gi
+    storageClass: ""
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 1000m
+      memory: 1Gi
+
+storeMcp:
+  port: 3001
+  backend: woocommerce
+  wooCommerceUrl: http://store
+  resources:
+    requests:
+      cpu: 50m
+      memory: 96Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+
+sampleMcp:
+  port: 3005
+  resources:
+    requests:
+      cpu: 50m
+      memory: 96Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+
+gateway:
+  host: gateway.local
+  port: 3002
+  resources:
+    requests:
+      cpu: 50m
+      memory: 96Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+
+dashboard:
+  host: dashboard.local
+  port: 3003
+  resources:
+    requests:
+      cpu: 50m
+      memory: 96Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+
+chat:
+  port: 3004
+  model: gpt-4o-mini
+  baseUrl: https://api.openai.com/v1
+  resources:
+    requests:
+      cpu: 50m
+      memory: 96Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+
+ingress:
+  className: ""
+  tls: []
+
+dataPersistence:
+  size: 1Gi
+  storageClass: ""
+
+networkPolicy:
+  enabled: true

@@ -1,0 +1,6 @@
+apiVersion: v2
+name: mcp-gateway
+description: Helm chart for the WooCommerce MCP Gateway assignment
+version: 0.1.0
+appVersion: "1.0.0"
+type: application

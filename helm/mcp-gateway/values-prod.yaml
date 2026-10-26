@@ -1,0 +1,45 @@
+image:
+  repository: ghcr.io/YOUR_ORG/mcp-gateway
+  tag: "1.0.0"
+
+global:
+  imagePullPolicy: IfNotPresent
+
+store:
+  image: ghcr.io/YOUR_ORG/mcp-woocommerce:1.0.0
+  host: shop.example.com
+  siteScheme: https
+  persistence:
+    size: 30Gi
+    storageClass: local-path
+
+database:
+  persistence:
+    size: 20Gi
+    storageClass: local-path
+
+gateway:
+  host: mcp.example.com
+
+dashboard:
+  host: dashboard.example.com
+
+dataPersistence:
+  size: 2Gi
+  storageClass: local-path
+
+ingress:
+  className: traefik
+  tls:
+    - secretName: shop-example-com-tls
+      hosts:
+        - shop.example.com
+    - secretName: mcp-example-com-tls
+      hosts:
+        - mcp.example.com
+    - secretName: dashboard-example-com-tls
+      hosts:
+        - dashboard.example.com
+
+networkPolicy:
+  enabled: true
