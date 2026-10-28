@@ -51,7 +51,7 @@ if ($LASTEXITCODE -ne 0) { throw "Could not inspect the existing application Sec
 if ($existingSecretJson) {
   $existingSecret = $existingSecretJson | ConvertFrom-Json
   function Read-ExistingSecret([string]$key) {
-    $encoded = $existingSecret.data[$key]
+    $encoded = $existingSecret.data.$key
     if (-not $encoded) { throw "Existing Kubernetes Secret is missing key '$key'." }
     return [Text.Encoding]::UTF8.GetString([Convert]::FromBase64String($encoded))
   }

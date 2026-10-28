@@ -177,17 +177,18 @@ spec:
               path: /
               port: http
             periodSeconds: 10
+            timeoutSeconds: 5
           livenessProbe:
             httpGet:
               path: /
               port: http
-            initialDelaySeconds: 15
             periodSeconds: 20
+            timeoutSeconds: 5
           startupProbe:
-            httpGet:
-              path: /wp-login.php
-              port: http
-            failureThreshold: 60
+            # start-wordpress writes this once the DB is ready and WooCommerce is active.
+            exec:
+              command: ["test", "-f", "/tmp/wordpress-ready"]
+            failureThreshold: 120
             periodSeconds: 5
           resources:
             {{- toYaml .Values.store.resources | nindent 12 }}
